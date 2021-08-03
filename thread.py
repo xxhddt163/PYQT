@@ -1,6 +1,6 @@
 import zipfile
 
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import *
 
 
 class New_Thread(QThread):
@@ -11,8 +11,8 @@ class New_Thread(QThread):
         super(New_Thread, self).__init__(parent)
         self.programs = programs
         self.path = path
-
-    def unzip(self):
+        self.result = False # 判断线程是否执行结束的标记
+    def run(self):
         zip_file = zipfile.ZipFile("auto_install.zip", "r")
         for _ in self.programs:
             for name in zip_file.namelist():
@@ -22,3 +22,5 @@ class New_Thread(QThread):
 
         zip_file.extract('auto_install.exe', self.path)
         zip_file.close()
+        self.result = True
+        self.finishSignal.emit(str(_))

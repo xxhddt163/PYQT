@@ -1,8 +1,7 @@
 import sys
-from time import sleep
-
-from PyQt5.QtWidgets import QApplication, QMainWindow
-
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
+from os.path import isdir
+from os import mkdir
 from mainwindow import *
 from scripts.menu import menu_format, menu_to_file
 from thread import New_Thread
@@ -30,17 +29,30 @@ class MainWindow(QMainWindow, Ui_mainwindow):
                     'sys_cra': '系统优化', 'T20': '天正建筑T20', 'PSCS3': 'PhotoShop CS3', 'PSCC2018': 'PhotoShop CC2018',
                     'OFFICE2013': 'Office 2013 Professional', 'PRCC2018': 'Premiere CC2018', 'Xunlei': '迅雷11', 'npplus': 'NotePad++',
                     'baidu_Netdisk': '百度网盘'}
-
-        self.lineEdit.setText(_translate(
-            "mainwindow", f"正在解压{menu_dir[_] if _ in menu_dir else _}..."))
-        self.programers_bar_value = (
-            1 - len(self.choose) / self.initialValue) * 100     # 计算进度
-        self.progressBar.setProperty("value", self.programers_bar_value)
-        self.choose.remove(menu_dir[_] if _ in menu_dir else _)
-
+        if len(self.choose ) != 0:
+            self.lineEdit.setText(_translate(
+                "mainwindow", f"正在解压{menu_dir[_] if _ in menu_dir else _}..."))
+            self.programers_bar_value = (
+                1 - len(self.choose) / self.initialValue) * 100     # 计算进度
+            self.progressBar.setProperty("value", self.programers_bar_value)
+            self.choose.remove(menu_dir[_] if _ in menu_dir else _)
+        if len(self.choose ) == 0:
+            self.programers_bar_value = (1 - len(self.choose) / self.initialValue) * 100     # 计算进度
+            self.progressBar.setProperty("value", self.programers_bar_value)
+        if len(self.choose) == 0 and self.Unzip.result:
+            reply = QMessageBox.information(self,"安装包解压完毕","所有安装包解压完毕，点击确定关闭本程序", QMessageBox.Ok)
+            if reply == QMessageBox.Ok:
+                self.close()
+            
+            
+    def check_directory(self):
+        if not isdir(self.path):
+            mkdir(self.path)
+    
     def pushButton_clicked(self):
         """按下解压按钮执行的操作
         """
+        self.path = self.lineEdit.text()
         self.frame_2.setEnabled(False)
         self.pushButton.setEnabled(False)
         if self.checkBox_1.isChecked():
@@ -102,23 +114,20 @@ class MainWindow(QMainWindow, Ui_mainwindow):
         if self.checkBox_29.isChecked():
             self.choose.append('CAD2007')
         if self.checkBox_30.isChecked():
-            self.choose.append('天正建筑T20'
-                               )
-        self.initialValue = len(self.choose)
-        self.Unzip = New_Thread(menu_format(self.choose), self.path)
-        self.Unzip.finishSignal.connect(self.change_edit_text)
-        self.Unzip.unzip()
-        self.programers_bar_value = (
-            1 - len(self.choose) / self.initialValue) * 100     # 计算进度
-        self.progressBar.setProperty("value", self.programers_bar_value)
-        _translate = QtCore.QCoreApplication.translate
-        self.lineEdit.setText(_translate(
-            "mainwindow", "安装包解压完毕,程序将在5秒后自动关闭......"))
-        menu_to_file(path=self.path, choose=menu_format(self.choose))
-        sleep(5)
-        self.close()
+            self.choose.append('天正建筑T20')
 
-
+        if len(self.choose) == 0:
+            QMessageBox.information(self,"请选择安装包","请选择任意要解压的安装包后继续")
+            self.frame_2.setEnabled(True)
+            self.pushButton.setEnabled(True)
+        else:
+            self.check_directory()
+            self.initialValue = len(self.choose)
+            self.Unzip = New_Thread(menu_format(self.choose), self.path)
+            self.Unzip.finishSignal.connect(self.change_edit_text)
+            self.Unzip.start()
+            menu_to_file(path=self.path, choose=menu_format(self.choose))
+                              
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     mainWindow = MainWindow()
