@@ -1,7 +1,9 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
-from os.path import isdir
 from os import mkdir
+from os.path import isdir
+
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
+
 from mainwindow import *
 from scripts.menu import menu_format, menu_to_file
 from thread import New_Thread
@@ -56,86 +58,27 @@ class MainWindow(QMainWindow, Ui_mainwindow):
     def pushButton_clicked(self):
         """按下解压按钮执行的操作
         """
-        try:
-            self.path = self.lineEdit.text()
-            self.frame_2.setEnabled(False)
-            self.pushButton.setEnabled(False)
-            if self.checkBox_1.isChecked():
-                self.choose.append(self.checkBox_1.text())
-            if self.checkBox_2.isChecked():
-                self.choose.append(self.checkBox_2.text())
-            if self.checkBox_3.isChecked():
-                self.choose.append(self.checkBox_3.text())
-            if self.checkBox_4.isChecked():
-                self.choose.append(self.checkBox_4.text())
-            if self.checkBox_5.isChecked():
-                self.choose.append(self.checkBox_5.text())
-            if self.checkBox_6.isChecked():
-                self.choose.append(self.checkBox_6.text())
-            if self.checkBox_7.isChecked():
-                self.choose.append(self.checkBox_7.text())
-            if self.checkBox_8.isChecked():
-                self.choose.append(self.checkBox_8.text())
-            if self.checkBox_9.isChecked():
-                self.choose.append(self.checkBox_9.text())
-            if self.checkBox_10.isChecked():
-                self.choose.append(self.checkBox_10.text())
-            if self.checkBox_11.isChecked():
-                self.choose.append(self.checkBox_11.text())
-            if self.checkBox_12.isChecked():
-                self.choose.append(self.checkBox_12.text())
-            if self.checkBox_13.isChecked():
-                self.choose.append(self.checkBox_13.text())
-            if self.checkBox_14.isChecked():
-                self.choose.append(self.checkBox_14.text())
-            if self.checkBox_15.isChecked():
-                self.choose.append(self.checkBox_15.text())
-            if self.checkBox_16.isChecked():
-                self.choose.append(self.checkBox_16.text())
-            if self.checkBox_17.isChecked():
-                self.choose.append(self.checkBox_17.text())
-            if self.checkBox_18.isChecked():
-                self.choose.append(self.checkBox_18.text())
-            if self.checkBox_19.isChecked():
-                self.choose.append(self.checkBox_19.text())
-            if self.checkBox_20.isChecked():
-                self.choose.append(self.checkBox_20.text())
-            if self.checkBox_21.isChecked():
-                self.choose.append(self.checkBox_21.text())
-            if self.checkBox_22.isChecked():
-                self.choose.append(self.checkBox_22.text())
-            if self.checkBox_23.isChecked():
-                self.choose.append(self.checkBox_23.text())
-            if self.checkBox_24.isChecked():
-                self.choose.append(self.checkBox_24.text())
-            if self.checkBox_25.isChecked():
-                self.choose.append(self.checkBox_25.text())
-            if self.checkBox_26.isChecked():
-                self.choose.append(self.checkBox_26.text())
-            if self.checkBox_27.isChecked():
-                self.choose.append(self.checkBox_27.text())
-            if self.checkBox_28.isChecked():
-                self.choose.append(self.checkBox_28.text())
-            if self.checkBox_29.isChecked():
-                self.choose.append(self.checkBox_29.text())
-            if self.checkBox_30.isChecked():
-                self.choose.append(self.checkBox_30.text())
+        self.path = self.lineEdit.text()
+        self.frame_2.setEnabled(False)
+        self.pushButton.setEnabled(False)
+        for _ in range(1,31):       # 检查checkBox1-30状态
+            exec (f'''if self.checkBox_{_}.isChecked():
+                    self.choose.append(self.checkBox_{_}.text())
+                    ''')
 
 
-            if len(self.choose) == 0:
-                QMessageBox.information(self,"请选择安装包","请选择任意要解压的安装包后继续")  # 当用户没选择任何安装包时弹出提示并恢复解压按钮及frame2
-                self.frame_2.setEnabled(True)
-                self.pushButton.setEnabled(True)
-            else:
-                self.check_directory()
-                self.initialValue = len(self.choose)  # 获取用户初始选择的程序数用做进度计算
-                self.Unzip = New_Thread(menu_format(self.choose), self.path) 
-                self.Unzip.finishSignal.connect(self.change_edit_text)  # 将pyqt5的信号传递给self.change函数处理
-                self.Unzip.start()  # 启动多线程
-                menu_to_file(path=self.path, choose=menu_format(self.choose))
-        except Exception as _:
-            with open("error.log", "w", encoding="utf-8") as f:
-                f.write(str(_))
+        if len(self.choose) == 0:
+            QMessageBox.information(self,"请选择安装包","请选择任意要解压的安装包后继续")  # 当用户没选择任何安装包时弹出提示并恢复解压按钮及frame2
+            self.frame_2.setEnabled(True)
+            self.pushButton.setEnabled(True)
+        else:
+            self.check_directory()
+            self.initialValue = len(self.choose)  # 获取用户初始选择的程序数用做进度计算
+            self.Unzip = New_Thread(menu_format(self.choose), self.path) 
+            self.Unzip.finishSignal.connect(self.change_edit_text)  # 将pyqt5的信号传递给self.change函数处理
+            self.Unzip.start()  # 启动多线程
+            menu_to_file(path=self.path, choose=menu_format(self.choose))
+    
 
                               
 if __name__ == "__main__":

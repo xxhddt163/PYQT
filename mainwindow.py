@@ -10,7 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog
-
+from PyQt5.QtGui import QIcon
 from scripts.system_info import system_info
 
 
@@ -22,9 +22,9 @@ class Ui_mainwindow(object):
 
     def setupUi(self, mainwindow):
         mainwindow.setObjectName("mainwindow")
-        mainwindow.resize(660, 380)
-        mainwindow.setMinimumSize(QtCore.QSize(623, 380))
-        mainwindow.setMaximumSize(QtCore.QSize(660, 380))
+        mainwindow.resize(660, 400)
+        mainwindow.setMinimumSize(QtCore.QSize(660, 400))
+        mainwindow.setMaximumSize(QtCore.QSize(660, 400))
         mainwindow.setIconSize(QtCore.QSize(24, 24))
         self.centralwidget = QtWidgets.QWidget(mainwindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -303,6 +303,7 @@ class Ui_mainwindow(object):
         _translate = QtCore.QCoreApplication.translate
         mainwindow.setWindowTitle(_translate(
             "mainwindow", "安装文件解压器 v0.1 by:冼叔叔"))
+        mainwindow.setWindowIcon(QIcon('1.ico'))
         self.label.setText(_translate("mainwindow", "解压路径："))
         self.lineEdit.setText(_translate("mainwindow", self.path))
         self.pushButton_2.setText(_translate("mainwindow", "浏览..."))
@@ -330,8 +331,7 @@ class Ui_mainwindow(object):
         self.radioButton_2.setText(_translate("mainwindow", "一般装机"))
         self.checkBox_6.setText(_translate("mainwindow", "NotePad++"))
         self.checkBox_10.setText(_translate("mainwindow", "DirectX9"))
-        self.checkBox_17.setText(_translate(
-            "mainwindow", "Office 2013 Professional"))
+        self.checkBox_17.setText(_translate("mainwindow", "Office 2013 Professional"))
         self.checkBox_9.setText(_translate("mainwindow", "Net Framework3"))
         self.checkBox_18.setText(_translate("mainwindow", "PhotoShop CS3"))
         self.checkBox_21.setText(_translate("mainwindow", "网易云音乐"))
