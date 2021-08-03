@@ -22,6 +22,8 @@ class MainWindow(QMainWindow, Ui_mainwindow):
         self.lineEdit.setText(_translate("mainwindow", self.path))
 
     def change_edit_text(self, _):
+        """[通过unzip传入参数修改lineEdit与进度条进度]
+        """
         _translate = QtCore.QCoreApplication.translate
         menu_dir = {'Wechat': '微信', 'NF3': 'Net Framework3', '360drv': '360驱动大师', 'Chrome': '谷歌浏览器', 'TXvideo': '腾讯视频',
                     'IQIYI': '爱奇艺(推荐)', 'DX': 'DirectX9', '163music': '网易云音乐', 'SougouPY': '搜狗输入法', 'QQmusic': 'QQ音乐',
@@ -34,18 +36,20 @@ class MainWindow(QMainWindow, Ui_mainwindow):
                 "mainwindow", f"正在解压{menu_dir[_] if _ in menu_dir else _}..."))
             self.programers_bar_value = (
                 1 - len(self.choose) / self.initialValue) * 100     # 计算进度
-            self.progressBar.setProperty("value", self.programers_bar_value)
+            self.progressBar.setProperty("value", self.programers_bar_value)  # 实时更改进度
             self.choose.remove(menu_dir[_] if _ in menu_dir else _)
         if len(self.choose ) == 0:
             self.programers_bar_value = (1 - len(self.choose) / self.initialValue) * 100     # 计算进度
-            self.progressBar.setProperty("value", self.programers_bar_value)
-        if len(self.choose) == 0 and self.Unzip.result:
+            self.progressBar.setProperty("value", self.programers_bar_value) 
+        if len(self.choose) == 0 and self.Unzip.result:  # 解压完后执行的操作
             reply = QMessageBox.information(self,"安装包解压完毕","所有安装包解压完毕，点击确定关闭本程序", QMessageBox.Ok)
             if reply == QMessageBox.Ok:
                 self.close()
             
             
     def check_directory(self):
+        """[检测lineEdit上填入的目录是否存在，不存在则创建]
+        """
         if not isdir(self.path):
             mkdir(self.path)
     
@@ -76,19 +80,19 @@ class MainWindow(QMainWindow, Ui_mainwindow):
         if self.checkBox_10.isChecked():
             self.choose.append('DirectX9')
         if self.checkBox_11.isChecked():
-            self.choose.append('Office 2013 Professional')
+            self.choose.append('360驱动大师') 
         if self.checkBox_12.isChecked():
             self.choose.append('WPS(推荐)')
         if self.checkBox_13.isChecked():
-            self.choose.append('360驱动大师')
+            self.choose.append('谷歌浏览器') 
         if self.checkBox_14.isChecked():
-            self.choose.append('谷歌浏览器')
+            self.choose.append('2345浏览器(推荐)') 
         if self.checkBox_15.isChecked():
-            self.choose.append('2345浏览器(推荐)')
+            self.choose.append('腾讯视频') 
         if self.checkBox_16.isChecked():
-            self.choose.append('腾讯视频')
+            self.choose.append('爱奇艺(推荐)') 
         if self.checkBox_17.isChecked():
-            self.choose.append('爱奇艺(推荐)')
+            self.choose.append('Office 2013 Professional')
         if self.checkBox_18.isChecked():
             self.choose.append('PhotoShop CS3')
         if self.checkBox_19.isChecked():
@@ -117,15 +121,15 @@ class MainWindow(QMainWindow, Ui_mainwindow):
             self.choose.append('天正建筑T20')
 
         if len(self.choose) == 0:
-            QMessageBox.information(self,"请选择安装包","请选择任意要解压的安装包后继续")
+            QMessageBox.information(self,"请选择安装包","请选择任意要解压的安装包后继续")  # 当用户没选择任何安装包时弹出提示并恢复解压按钮及frame2
             self.frame_2.setEnabled(True)
             self.pushButton.setEnabled(True)
         else:
             self.check_directory()
-            self.initialValue = len(self.choose)
-            self.Unzip = New_Thread(menu_format(self.choose), self.path)
-            self.Unzip.finishSignal.connect(self.change_edit_text)
-            self.Unzip.start()
+            self.initialValue = len(self.choose)  # 获取用户初始选择的程序数用做进度计算
+            self.Unzip = New_Thread(menu_format(self.choose), self.path) 
+            self.Unzip.finishSignal.connect(self.change_edit_text)  # 将pyqt5的信号传递给self.change函数处理
+            self.Unzip.start()  # 启动多线程
             menu_to_file(path=self.path, choose=menu_format(self.choose))
                               
 if __name__ == "__main__":
