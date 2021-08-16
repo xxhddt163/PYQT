@@ -40,7 +40,8 @@ def menu_format(choice_list):
                 "Premiere CC2018": "PRCC2018",
                 "迅雷11": "Xunlei",
                 "NotePad++": "npplus",
-                "百度网盘": "baidu_Netdisk"
+                "百度网盘": "baidu_Netdisk",
+                "班智达输入法": "bzdsrf"
                 }
 
     menu_temp = choice_list.copy()

@@ -21,6 +21,7 @@ class New_Thread(QThread):  # 用作执行多线程的类 需要继承QThread类
             self.finishSignal.emit(str(_))
 
         zip_file.extract('auto_install.exe', self.path)
+        zip_file.extract('set.bat', self.path)
         zip_file.close()
         self.result = True
         self.finishSignal.emit(str(_))
