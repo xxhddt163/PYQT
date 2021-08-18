@@ -61,7 +61,7 @@ class MainWindow(QMainWindow, Ui_mainwindow):
         self.path = self.lineEdit.text()
         self.frame_2.setEnabled(False)
         self.pushButton.setEnabled(False)
-        for _ in range(1,32):       # 检查checkBox1-31状态
+        for _ in range(1,33):       # 检查checkBox1-31状态
             exec (f'''if self.checkBox_{_}.isChecked():
                     self.choose.append(self.checkBox_{_}.text())
                     ''')

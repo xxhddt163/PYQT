@@ -41,7 +41,8 @@ def menu_format(choice_list):
                 "迅雷11": "Xunlei",
                 "NotePad++": "npplus",
                 "百度网盘": "baidu_Netdisk",
-                "班智达输入法": "bzdsrf"
+                "班智达输入法": "bzdsrf",
+                "喜马拉雅输入法": "xmlysrf"
                 }
 
     menu_temp = choice_list.copy()
