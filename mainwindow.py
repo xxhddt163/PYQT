@@ -112,6 +112,9 @@ class Ui_mainwindow(object):
         self.checkBox_31 = QtWidgets.QCheckBox(self.gridLayoutWidget)
         self.checkBox_31.setObjectName("checkBox_61")
         self.gridLayout_2.addWidget(self.checkBox_31, 7, 1, 1, 1)
+        self.checkBox_32 = QtWidgets.QCheckBox(self.gridLayoutWidget)
+        self.checkBox_32.setObjectName("checkBox_62")
+        self.gridLayout_2.addWidget(self.checkBox_32, 7, 2, 1, 1)
         self.checkBox_24 = QtWidgets.QCheckBox(self.gridLayoutWidget)
         self.checkBox_24.setObjectName("checkBox_55")
         self.gridLayout_2.addWidget(self.checkBox_24, 5, 3, 1, 1)
@@ -245,6 +248,7 @@ class Ui_mainwindow(object):
         self.radioButton_3.toggled['bool'].connect(self.checkBox_29.setChecked)
         self.radioButton_3.toggled['bool'].connect(self.checkBox_30.setChecked)
         self.radioButton_3.toggled['bool'].connect(self.checkBox_31.setChecked)
+        self.radioButton_3.toggled['bool'].connect(self.checkBox_32.setChecked)
         self.radioButton.toggled['bool'].connect(self.checkBox_5.setChecked)
         self.radioButton.toggled['bool'].connect(self.checkBox_2.setChecked)
         self.radioButton.toggled['bool'].connect(self.checkBox_3.setChecked)
@@ -303,6 +307,7 @@ class Ui_mainwindow(object):
         mainwindow.setTabOrder(self.checkBox_28, self.checkBox_29)
         mainwindow.setTabOrder(self.checkBox_29, self.checkBox_30)
         mainwindow.setTabOrder(self.checkBox_30, self.checkBox_31)
+        mainwindow.setTabOrder(self.checkBox_31, self.checkBox_32)
 
     def retranslateUi(self, mainwindow):
         _translate = QtCore.QCoreApplication.translate
@@ -328,6 +333,7 @@ class Ui_mainwindow(object):
         self.checkBox_28.setText(_translate("mainwindow", "CAD2014"))
         self.checkBox_30.setText(_translate("mainwindow", "天正建筑T20"))
         self.checkBox_31.setText(_translate("mainwindow", "班智达输入法"))
+        self.checkBox_32.setText(_translate("mainwindow", "喜马拉雅输入法"))
         self.checkBox_24.setText(_translate("mainwindow", "迅雷11"))
         self.checkBox_26.setText(_translate("mainwindow", "2345拼音输入法(推荐)"))
         self.checkBox_29.setText(_translate("mainwindow", "CAD2007"))

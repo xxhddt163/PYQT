@@ -32,7 +32,7 @@ class MainWindow(QMainWindow, Ui_mainwindow):
                     'Dtalk': '钉钉', 'Kugou': '酷狗音乐(推荐)', '2345explorer': '2345浏览器(推荐)', '2345pinyin': '2345拼音输入法(推荐)', 'WPS': 'WPS(推荐)',
                     'sys_cra': '系统优化', 'T20': '天正建筑T20', 'PSCS3': 'PhotoShop CS3', 'PSCC2018': 'PhotoShop CC2018',
                     'OFFICE2013': 'Office 2013 Professional', 'PRCC2018': 'Premiere CC2018', 'Xunlei': '迅雷11', 'npplus': 'NotePad++',
-                    'baidu_Netdisk': '百度网盘', 'bzdsrf': '班智达输入法'}
+                    'baidu_Netdisk': '百度网盘', 'bzdsrf': '班智达输入法', 'xmlysrf': '喜马拉雅输入法'}
         if len(self.choose ) != 0:
             self.lineEdit.setText(_translate(
                 "mainwindow", f"正在解压{menu_dir[_] if _ in menu_dir else _}..."))
